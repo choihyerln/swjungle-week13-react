@@ -2,6 +2,25 @@
   text-align: center;
 }
 
+.form-wrapper {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.title {
+  height: 50px;
+  margin-top: 20px;
+}
+
+.content {
+  /* width: 60%; */
+  min-height: 300px;
+}
+
+.submit-button {
+  margin: 20px;
+}
+
 .App-logo {
   height: 40vmin;
   pointer-events: none;
@@ -35,4 +54,8 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.demo-loadmore-list {
+  min-height: 350px;
 }
