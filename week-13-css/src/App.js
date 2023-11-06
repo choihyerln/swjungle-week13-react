@@ -4,7 +4,7 @@ import User from "./components/User.js";
 import "./App.css";
 
 function App() {
-    // useState를 이용한 상태값 만들기
+  // useState를 이용한 상태값 만들기
   const [userList, setUserList] = useState([
     { id: 1, age: 30, name: "송중기" },
     { id: 2, age: 24, name: "송강" },

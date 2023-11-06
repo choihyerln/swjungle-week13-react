@@ -1,56 +1,58 @@
-const array1 = [1, 4, 9, 16];
+// import { useState } from "react";
 
-const map1 = array1.map((x) => x * 2);
+// const App = () => {
+//     const [number, setNumber] = useState(0);
+//     return (
+//         <div>
+//             <div>{number}</div>
+//             <button onClick={() => {
+//                 // 세번 동시에 명령을 내리면 그 명령을 모아 순차적으로 한번씩 실행시킨다.
+//                 setNumber((number) => { return number + 1 });
+//                 setNumber((number) => { return number + 1 });
+//                 setNumber((number) => { return number + 1 });
+                
+//                 // batch 업데이트로 한번에 처리하기 때문에 일반 업데이트 방식은 한번만 실행이 된다.
+//                 // setNumber(number + 1);
+//                 // setNumber(number + 1);
+//                 // setNumber(number + 1);
+//             }}>
+//                 버튼
+//             </button>
+//         </div>
+//     );
+// }
 
-console.log(map1);  // [ 2, 8, 18, 32 ]
+// export default App;
 
-// array1.map(callback(currentValue[, index[, array]])[, thisArg])
+// import React, { useEffect } from "react";
 
-var num = [1, 4, 9];
-var roots = num.map(Math.sqrt);
-console.log(roots);
+// const App = () => {
+//     useEffect(() => {
+            // 이 부분이 실행된다
+//         console.log("hello useEffect");
+//     });
+//     return <div>Home</div>;
+// }
 
-var keyArr = [
-    { key: 1, value: 10 },
-    { key: 2, value: 20 },
-    { key: 3, value: 30 }
-];
+// export default App;
 
-var reformat = keyArr.map(function (obj) {
-    var robj = {};
-    robj[obj.key] = obj.value;
-    return robj;
-})
+import React, { useEffect, useState } from "react";
 
-console.log(reformat);
+const App = () => {
+    const [value, setValue] = useState("");
 
-var numbers = [1, 4, 9];
-var doubles = numbers.map(function (num) {
-    return num * 2;
-});
-console.log(doubles);
+    useEffect(() => {
+        console.log({ value });
+        // console.log("hello useEffect");
+    }, [value]);     // 비어있는 의존성 배열->처음에 딱 한번만 실행되고 그 이후로는 실행 X
 
-var map = Array.prototype.map;
-var a = map.call("Hello World!", function (x) {
-    return x.charCodeAt(0);
-});
-console.log(a);
-
-// var elems = document.querySelectorAll("select option:checked");
-// var values = [].map.call(elems, function (obj) {
-//     return obj.value;
-// })
-// console.log(values);
-
-console.log(["1", "2", "3"].map(parseInt));
-
-function returnInt(element) {
-    return parseInt(element, 10);
+    return (
+        <div>
+            <input type="text" value={value} onChange={(e) => {
+                setValue(e.target.value);
+            }} />
+        </div>
+    );
 }
-console.log(["1", "2", "3"].map(returnInt));
 
-console.log(["1", "2", "3"].map((str) => parseInt(str)));
-
-console.log(["1", "2", "3"].map(Number));
-
-console.log(["1.1", "2.2e2", "3e300"].map(Number));
+export default App;
