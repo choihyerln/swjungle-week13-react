@@ -3,7 +3,7 @@ import { SuccessAlert, ErrorAlert } from '../components/Alert';
 
 // 다음 글을 위해 자동 id+1
 async function getNextId() {
-    const response = await axios.get('http://localhost:3001/postList');
+    const response = await axios.get('https://swjungle-week13-react.vercel.app/postList');
     const lastPost = response.data[response.data.length - 1];
     return lastPost ? lastPost.id + 1 : 1;
 }
@@ -12,7 +12,7 @@ async function getNextId() {
 // axios 요청을 통해 json server로부터 데이터를 받아오면 된다.
 export const GetPosting = async () => {
     try {
-        const response = await axios.get('http://localhost:3001/postList');
+        const response = await axios.get('https://swjungle-week13-react.vercel.app/postList');
         return response.data;   // 가져온 데이터 반환
     }
     catch (error) {
@@ -25,7 +25,7 @@ export const GetPosting = async () => {
 export const addNewPosting = async (title, content) => {
     try {
         const id = await getNextId();   // 다음 id값 가져옴
-        const response = await axios.post('http://localhost:3001/postList', {
+        const response = await axios.post('https://swjungle-week13-react.vercel.app/postList', {
             id,
             title,
             content,
@@ -42,7 +42,7 @@ export const addNewPosting = async (title, content) => {
 // 글 수정
 export const editPosting = async (id, title, content) => {
     try {
-        const response = await axios.patch(`http://localhost:3001/postList/${id}`, {
+        const response = await axios.patch(`https://swjungle-week13-react.vercel.app/postList/${id}`, {
             title,
             content,
         });
@@ -56,7 +56,7 @@ export const editPosting = async (id, title, content) => {
 }
 
 export const deletePosting = async (id) => {
-    await axios.delete(`http://localhost:3001/postList/${id}`).then((res) => {
+    await axios.delete(`https://swjungle-week13-react.vercel.app/postList/${id}`).then((res) => {
         // return SuccessAlert();
     })
 }
