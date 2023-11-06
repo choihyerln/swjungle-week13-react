@@ -34,7 +34,7 @@ function PostList() {
                 <EditIcon fontSize="large" />
             </Fab>
             <div className='board-container'>
-                {postList.map((elem) => (
+                {postList && postList.map((elem) => (
                     <div key={elem.id}> {/* 고유한 키를 제공 */}
                         <h2>
                             <Link to={`/detail/${elem.id}`}>{elem.title}</Link>
