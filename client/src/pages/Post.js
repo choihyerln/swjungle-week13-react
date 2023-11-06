@@ -1,10 +1,16 @@
 import '../App.css';
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { addNewPosting } from '../api/Api';
-import { Input, Button, Card } from "antd";
+import { Input, Card } from "antd";
+import Button from '@mui/material-next/Button';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import UploadIcon from '@mui/icons-material/Upload';
+import Fab from '@mui/material/Fab';
 import CardHead from "../components/CardHead";
 import Header from "./Header";
+import { ErrorAlert } from '../components/Alert';
+// import { Alert, AlertTitle, Dialog } from '@mui/material';
 const { TextArea } = Input;
 
 function Post() {
@@ -14,7 +20,7 @@ function Post() {
     });
 
     const navigate = useNavigate();
-    
+
     const getValue = (e) => {
         const { name, value } = e.target;
         setPost({
@@ -32,13 +38,20 @@ function Post() {
         } catch (error) {
             console.error('게시물 추가 오류:', error);
         }
-    };    
-    
+    };
+
     return (
         <div className='App'>
-            <Link to='/'>
+            <div onClick={() => navigate('/')}>
                 <Header />
-            </Link>
+            </div>
+
+            <Fab onClick={() => {
+                navigate('/postList')
+            }}>
+                <ListAltIcon fontSize="large" />
+            </Fab>
+
             <Card
                 bordered={false}
                 style={{
@@ -76,15 +89,23 @@ function Post() {
                     />
                 </div>
             </Card>
-
             <Button
-                type="primary"
-                ghost
+                color="primary"
+                variant="elevated"
                 className='submit-button'
-                onClick={addPost}
+                onClick={() => {
+                    if (post.title.length < 4)
+                        <ErrorAlert />
+
+                    else
+                        addPost();
+                }}
+                disabled={post.title === '' || post.content === '' ? true : false}
             >
-                작성하기  
+                <UploadIcon />
+                업로드하기
             </Button>
+
         </div>
     );
 }

@@ -16,7 +16,7 @@ const CardHeadBlock = styled.div`
   .day {
     margin-top: 10px;
     color: #868e96;
-    font-size: 21px;
+    font-size: 18px;
   }
 `;
 
@@ -35,7 +35,7 @@ const dayOfWeek = week[today.getDay()];
 function CardHead() {
     return (
         <CardHeadBlock>
-            <h1>{dateString}</h1>
+            <h2>{dateString}</h2>
             <div className="day">{dayOfWeek}요일</div>
         </CardHeadBlock>
     );

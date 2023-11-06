@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { SuccessAlert, ErrorAlert } from '../components/Alert';
 
 // 다음 글을 위해 자동 id+1
 async function getNextId() {
@@ -29,7 +30,7 @@ export const addNewPosting = async (title, content) => {
             title,
             content,
         });
-        console.log("👉🏻 post 됨????: " , response.data);
+        console.log("👉🏻 post 됨????: ", response.data);
         // 서버에서 생성된 데이터 또는 다른 응답을 사용할 수 있음
         return response.data;
     } catch (error) {
@@ -52,4 +53,10 @@ export const editPosting = async (id, title, content) => {
         console.error('게시물 수정 실패:', error);
         throw error;
     }
+}
+
+export const deletePosting = async (id) => {
+    await axios.delete(`http://localhost:3001/postList/${id}`).then((res) => {
+        // return SuccessAlert();
+    })
 }

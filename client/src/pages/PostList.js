@@ -1,13 +1,16 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAtom } from 'jotai';
 import { postListAtom } from './modules/atoms'; // 조타이 상태 추가
 import { GetPosting } from '../api/Api';
+import Fab from '@mui/material/Fab';
+import EditIcon from '@mui/icons-material/Edit';
 import Header from "./Header";
 
 function PostList() {
+    const navigate = useNavigate();
     const [postList, setPostList] = useAtom(postListAtom); // 조타이 상태로 읽기
-    console.log("@@@ postList: ",postList);
+    console.log("@@@ postList: ", postList);
 
     useEffect(() => {
         const loadPostList = async () => {
@@ -25,6 +28,11 @@ function PostList() {
     return (
         <div className='App'>
             <Header />
+            <Fab aria-label="edit" onClick={() => {
+                navigate('/post')
+            }}>
+                <EditIcon fontSize="large" />
+            </Fab>
             <div className='board-container'>
                 {postList.map((elem) => (
                     <div key={elem.id}> {/* 고유한 키를 제공 */}

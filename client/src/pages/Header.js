@@ -1,26 +1,11 @@
-import { createGlobalStyle } from 'styled-components';
-import { Link } from "react-router-dom";
-import { Button } from 'antd';
-
-const GlobalStyle = createGlobalStyle`
-body {
-    background: #e9ecef;
-}
-`;
+import { useNavigate } from "react-router-dom";
 
 function Header() {
+    const navigate = useNavigate();
 
     return (
         <div className='App'>
-            <GlobalStyle />
-            <h1><Link to='/'>일기쓰쇼</Link></h1>
-            <Button type="primary">
-                <Link to='/post'>글 쓰기</Link>
-            </Button>
-            <Button type="default">
-                <Link to='/postList'>게시글 목록</Link>
-            </Button>
-            <hr />
+            <h1 onClick={() => navigate('/')}>일기쓰쇼</h1>
         </div>
     )
 }

@@ -2,26 +2,33 @@ import { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { postListAtom } from './modules/atoms';
-import { editPosting } from '../api/Api';
-import { Input, Button, Card } from "antd";
+import { editPosting, deletePosting } from '../api/Api';
+import { Input, Card } from "antd";
+import Button from '@mui/material-next/Button';
+import DeleteIcon from '@mui/icons-material/Delete';
+import ListAltIcon from '@mui/icons-material/ListAlt';
+import Fab from '@mui/material/Fab';
 import CardHead from "../components/CardHead";
 import Header from "./Header";
+import SaveAsIcon from '@mui/icons-material/SaveAs';
+import EditNoteIcon from '@mui/icons-material/EditNote';
+import { ErrorAlert, SuccessAlert } from '../components/Alert';
 const { TextArea } = Input;
 
 function Detail() {
     // atom의 현재 상태와 업데이트 함수 가져옴
     const [postList, setPostList] = useAtom(postListAtom);
-    
+
     const { postId } = useParams();
     const postIdInt = parseInt(postId, 10);
-    
+
     // 전역상태로 해야함
     const targetPost = postList.find((p) => p.id === postIdInt)
-    
+
     const [isEditing, setIsEditing] = useState(false);  // 수정 모드를 관리하는 상태
     const [editTitle, setEditTitle] = useState(targetPost.title);  // 수정된 제목을 저장하는 상태
     const [editContent, setEditContent] = useState(targetPost.content);  // 수정된 내용을 저장하는 상태
-    
+
     const navigate = useNavigate();
 
     if (!targetPost || targetPost === undefined) {
@@ -43,38 +50,57 @@ function Detail() {
         const updatePostList = postList.map((post) => {
             // 아이디가 같을 때 title->editTitle로 바꿔주고 content->editContent로 바꿔주고나서 setList
             if (post.id === postIdInt) {
-                return {
-                    ...post,
-                    title: editTitle,
-                    content: editContent
-                };
+                if (post.title.length < 4)
+                    return;
+                else
+                    return {
+                        ...post,
+                        title: editTitle,
+                        content: editContent
+                    };
             }
             return post;
         });
-        
+
         // POST 요청
-        try {
-            // 게시물 수정 요청 (patch 사용)
-            await editPosting(postIdInt, editTitle, editContent);
-            // 게시물 수정 후 홈 화면으로 이동
-            navigate(`../detail/${postIdInt}`);
-            alert('수정되었습니다.');
-        } catch (error) {
-            console.error('게시물 추가 오류:', error);
+        if (editTitle.length >= 3) {
+            try {
+                // 게시물 수정 요청 (patch 사용)
+                await editPosting(postIdInt, editTitle, editContent);
+                // 게시물 수정 후 해당 게시글 페이지로
+                navigate(`../detail/${postIdInt}`);
+                // <SuccessAlert open={true} title={"제목"} content={"sodkdkd"} />
+            } catch (error) {
+                console.error('게시물 추가 오류:', error);
+            }
+            setPostList(updatePostList);
+            setIsEditing(false);
         }
-        setPostList(updatePostList);
-        setIsEditing(false);
+
+        else {
+            // <ErrorAlert />
+        }
     };
 
-    const handleDeleteClick = () => {
-        
-    }
+    // 게시글 삭제
+    const handleDeleteClick = async () => {
+        if (window.confirm('게시글을 삭제하시겠습니까?')) {
+            await deletePosting(postIdInt);
+            navigate('/postList');
+        };
+    };
 
     return (
-        <div className="App">
-            <Link to='/'>
+        <div className='App'>
+            <div onClick={() => navigate('/')}>
                 <Header />
-            </Link>
+            </div>
+
+            <Fab onClick={() => {
+                navigate('/postList')
+            }}>
+                <ListAltIcon fontSize="large" />
+            </Fab>
             <Card
                 bordered={false}
                 style={{
@@ -125,18 +151,36 @@ function Detail() {
             </Card>
 
             <Button
-                type="primary"
-                ghost
+                color="primary"
+                variant="elevated"
                 className='submit-button'
                 onClick={isEditing ? handleSaveClick : handleEditClick}
-                >
-                    {isEditing ? '저장' : '수정'}
+                disabled={editTitle === '' || editContent === '' ? true : false}
+            >
+                {isEditing ? (
+                    <>
+                        <SaveAsIcon />
+                        저장
+                    </>
+                ) : (
+                    <>
+                        <EditNoteIcon />
+                        수정
+                    </>
+                )
+                }
             </Button>
             <Button
+                color="primary"
+                variant="elevated"
                 onClick={handleDeleteClick}
             >
-                삭제
+                <>
+                    <DeleteIcon />
+                    삭제
+                </>
             </Button>
+            {/* <SuccessAlert open={true} title={"게시글 수정 완료!"} content={"This is a success alert — check it out!"} /> */}
         </div>
     );
 }
