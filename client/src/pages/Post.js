@@ -33,6 +33,7 @@ function Post() {
         try {
             // 게시물 추가 요청
             await addNewPosting(post.title, post.content);
+            alert('글이 작성되었습니다!');
             // 게시물 추가 후 홈 화면으로 이동
             navigate('/postList');
         } catch (error) {
@@ -46,7 +47,7 @@ function Post() {
                 <Header />
             </div>
 
-            <Fab onClick={() => {
+            <Fab color="secondary" onClick={() => {
                 navigate('/postList')
             }}>
                 <ListAltIcon fontSize="large" />
@@ -89,13 +90,14 @@ function Post() {
                     />
                 </div>
             </Card>
+            <br />
             <Button
                 color="primary"
                 variant="elevated"
                 className='submit-button'
                 onClick={() => {
                     if (post.title.length < 4)
-                        <ErrorAlert />
+                        alert('제목은 3글자 이상 입력해주세요!');
 
                     else
                         addPost();
@@ -105,7 +107,8 @@ function Post() {
                 <UploadIcon />
                 업로드하기
             </Button>
-
+            <br />
+            <br />
         </div>
     );
 }

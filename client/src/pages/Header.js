@@ -5,7 +5,7 @@ function Header() {
 
     return (
         <div className='App'>
-            <h1 onClick={() => navigate('/')}>일기쓰쇼</h1>
+            <h1 onClick={() => navigate('/')}>일기장</h1>
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 const CardHeadBlock = styled.div`
-  text-align: left;
+  text-align: center;
   padding-top: 20px;
   padding-left: 30px;
   padding-right: 32px;
@@ -9,14 +9,12 @@ const CardHeadBlock = styled.div`
   border-bottom: 1px solid #e9ecef;
 
   h1 {
-    margin: 0;
-    font-size: 30px;
+    font-size: 25px;
     color: #343a40;
   }
   .day {
-    margin-top: 10px;
     color: #868e96;
-    font-size: 18px;
+    font-size: 15px;
   }
 `;
 

@@ -1,4 +1,5 @@
 .App {
+  margin-top: 100px;
   text-align: center;
 }
 
@@ -19,6 +20,14 @@
 
 .submit-button {
   margin: 20px;
+}
+
+#edit-fab {
+  margin-right: 10px; /* 오른쪽 여백을 추가하여 간격을 조절 */
+}
+
+#list-fab {
+  margin-left: 10px; /* 왼쪽 여백을 추가하여 간격을 조절 */
 }
 
 .App-logo {

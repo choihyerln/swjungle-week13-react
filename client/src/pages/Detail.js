@@ -1,5 +1,6 @@
+import '../App.css';
 import { useState } from 'react';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useAtom } from 'jotai';
 import { postListAtom } from './modules/atoms';
 import { editPosting, deletePosting } from '../api/Api';
@@ -12,7 +13,7 @@ import CardHead from "../components/CardHead";
 import Header from "./Header";
 import SaveAsIcon from '@mui/icons-material/SaveAs';
 import EditNoteIcon from '@mui/icons-material/EditNote';
-import { ErrorAlert, SuccessAlert } from '../components/Alert';
+// import { ErrorAlert, SuccessAlert } from '../components/Alert';
 const { TextArea } = Input;
 
 function Detail() {
@@ -69,6 +70,7 @@ function Detail() {
                 await editPosting(postIdInt, editTitle, editContent);
                 // 게시물 수정 후 해당 게시글 페이지로
                 navigate(`../detail/${postIdInt}`);
+
                 // <SuccessAlert open={true} title={"제목"} content={"sodkdkd"} />
             } catch (error) {
                 console.error('게시물 추가 오류:', error);
@@ -78,7 +80,7 @@ function Detail() {
         }
 
         else {
-            // <ErrorAlert />
+            alert('제목은 3글자 이상 입력해주세요!');
         }
     };
 
@@ -96,7 +98,7 @@ function Detail() {
                 <Header />
             </div>
 
-            <Fab onClick={() => {
+            <Fab color="secondary" onClick={() => {
                 navigate('/postList')
             }}>
                 <ListAltIcon fontSize="large" />
@@ -149,7 +151,7 @@ function Detail() {
                     </>
                 )}
             </Card>
-
+            <br />
             <Button
                 color="primary"
                 variant="elevated"
@@ -159,12 +161,12 @@ function Detail() {
             >
                 {isEditing ? (
                     <>
-                        <SaveAsIcon />
+                        <SaveAsIcon id="edit-fab" />
                         저장
                     </>
                 ) : (
                     <>
-                        <EditNoteIcon />
+                        <EditNoteIcon id="edit-fab"/>
                         수정
                     </>
                 )
@@ -173,6 +175,7 @@ function Detail() {
             <Button
                 color="primary"
                 variant="elevated"
+                id="list-fab"
                 onClick={handleDeleteClick}
             >
                 <>
@@ -180,6 +183,9 @@ function Detail() {
                     삭제
                 </>
             </Button>
+            <br />
+            <br />
+
             {/* <SuccessAlert open={true} title={"게시글 수정 완료!"} content={"This is a success alert — check it out!"} /> */}
         </div>
     );
